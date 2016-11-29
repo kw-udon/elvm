@@ -61,7 +61,7 @@ COBJS := $(addprefix out/,$(notdir $(CSRCS:.c=.o)))
 $(COBJS): out/%.o: ir/%.c
 	$(CC) -c -I. $(CFLAGS) $< -o $@
 
-ELC_SRCS := elc.c util.c rb.c py.c tf.c js.c php.c el.c vim.c tex.c cl.c sh.c sed.c java.c swift.c c.c cpp.c x86.c i.c ws.c piet.c pietasm.c bef.c bf.c unl.c
+ELC_SRCS := elc.c util.c rb.c py.c tf.c js.c php.c el.c vim.c tex.c cl.c sh.c sed.c java.c swift.c c.c cpp.c cpp_templ.c x86.c i.c ws.c piet.c pietasm.c bef.c bf.c unl.c
 ELC_SRCS := $(addprefix target/,$(ELC_SRCS))
 COBJS := $(addprefix out/,$(notdir $(ELC_SRCS:.c=.o)))
 $(COBJS): out/%.o: target/%.c
@@ -254,6 +254,14 @@ RUNNER := tools/runcpp.sh
 TOOL := g++-6
 include target.mk
 $(OUT.eir.cpp.out): tools/runcpp.sh
+
+ifdef CPP_TEMPL
+TARGET := cpp_templ
+RUNNER := tools/runcpp_templ.sh
+TOOL := g++-6
+include target.mk
+$(OUT.eir.cpp_templ.out): tools/runcpp_templ.sh
+endif
 
 ifeq ($(uname),Linux)
 TARGET := x86
